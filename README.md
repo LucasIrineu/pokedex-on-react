@@ -1,7 +1,7 @@
 # Pokedex-on-React
-Estudo pessoal de front-end, desenvolvido com React e TypeScript.
+Estudo pessoal de Front-End, desenvolvido com React e TypeScript.
 
-Uma pokedex que consulta e lista Pokemons utlizando a PokeAPI (https://pokeapi.co/)
+Uma Pokedex que consulta e lista Pokemons utlizando a PokéAPI (https://pokeapi.co/)
 
 Conceitos estudados:
 - Validação simples de Form com Email e Senha
