@@ -17,6 +17,10 @@ const ResultList: FC<IResultListProps> = (props): JSX.Element => {
         ))
       }
       </div>
+
+        <div className="result-index">
+          
+        </div>
     </div>
   )
 }

@@ -15,6 +15,11 @@ export const getPokemonByIdOrName = async (idOrName: string) => {
 
 }
 
+export const getFirstGen = async (perPage: number, index: number) => {
+  
+  const endpoint = `https://pokeapi.co/api/v2/pokemon?limit=${perPage}&offset=${index * 15}`
+}
+
 export const getPokemonByRegion = async (region: string) => {
   let endpoint = ''
   switch (region.toLowerCase()) {
@@ -24,6 +29,9 @@ export const getPokemonByRegion = async (region: string) => {
     case 'kanto':
       endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=151';
       break;
+    case 't':
+    endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=15&offset=15';
+    break;
     default:
       endpoint = 'https://pokeapi.co/api/v2/pokemon?limit=9';
       break;
@@ -33,17 +41,13 @@ export const getPokemonByRegion = async (region: string) => {
   const requestJson = await request.json();
   const { results } = requestJson;
 
-  console.log('kanto1: ', results)
-
   const promises = results.map(async (element: ISimplePokemon) => {
     const pokeToAdd = await getPokemonByIdOrName(element.name);
-    console.log('pokeToAdd: ', pokeToAdd);
     return pokeToAdd;
   });
 
   const result = Promise.all(promises);
 
-  console.log('sorted: ', result)
   return result;
 }
 

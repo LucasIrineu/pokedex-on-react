@@ -10,9 +10,11 @@ function SearchBar() {
 
   const handleSearchButton = async () => {
     if (searchType === 'name') {
+      context?.setLoading(true)
       const results = await getPokemonByIdOrName(searchInput);
       results !== null ? context?.setSearchResults([results]) : context?.setSearchResults(null);
     } else if (searchType === 'region') {
+      context?.setLoading(true)
       const results = await getPokemonByRegion(searchInput);
       results !== null ? context?.setSearchResults(results) : context?.setSearchResults(null);
     }
@@ -28,27 +30,28 @@ function SearchBar() {
   }
 
   return(
-    <>
-    <div className="logo"></div>
+    <div className='bar'>
     <form className="search-form">
-      <label htmlFor='search-input' className="search-label">
-        <input
-          type={'text'}
-          maxLength={12}
-          className="search-input"
-          placeholder='Nome do Pokemon, Tipo, ID, Região'
-          value={searchInput}
-          onChange={ ({ target }) => setSearchInput(target.value)}
-          onKeyPress={(event) => handleEnterButton(event)}
-        />
-      </label>
-      <button
-      type='button'
-      className='search-button'
-      onClick={ handleSearchButton }
-      >
-        Pesquisar
-      </button>
+      <div className="search-input-and-button">
+        <label htmlFor='search-input' className="search-label">
+          <input
+            type={'text'}
+            maxLength={12}
+            className="search-input"
+            placeholder='Nome do Pokemon, Tipo, ID, Região'
+            value={searchInput}
+            onChange={ ({ target }) => setSearchInput(target.value)}
+            onKeyPress={(event) => handleEnterButton(event)}
+          />
+        </label>
+        <button
+        type='button'
+        className='search-button'
+        onClick={ handleSearchButton }
+        >
+          Pesquisar
+        </button>
+      </div>
     </form>
 
     <div className="search-type">
@@ -74,7 +77,7 @@ function SearchBar() {
         <span className="search-type-name">Região</span>
       </label>
     </div>
-    </>
+    </div>
   )
 }
 

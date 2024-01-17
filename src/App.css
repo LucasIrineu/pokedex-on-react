@@ -11,29 +11,81 @@
 body {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-image: url('./assets/redBlackWhiteBG.jpg');
-  background-size: 100%;
+  flex-wrap: nowrap;
+  background-image: linear-gradient(to right bottom, #e10000, #ee3f33, #f76259, #fc817d, #fd9f9f);
+  background-attachment: fixed;
+  width: 100%;
+  margin-top: 65px;
 }
 
-.homePage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 900px;
+.bar {
+  width: 510px;
+  margin-left: 33%;
 }
+
+.header {
+  display: flex;
+  flex-direction: row;
+  height: 65px;
+  width: 100%;
+  background-color: rgba(50, 50, 50, 1);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.header svg {
+  color: white;
+  width: 40px;
+  height: 40px;
+  margin: 10px 0px 0px 20px;
+  position: inherit;
+}
+
+.header svg:hover {
+  cursor: pointer;
+}
+
+.header img {
+  width: 370px;
+  height: 60px;
+  margin: 0 0 0 39%;
+  position: inherit;
+}
+
+.close-sidebar-logo svg{
+  color: white;
+  width: 40px;
+  height: 40px;
+  margin: 10px 0px 0px 20px;
+}
+
+.close-sidebar-logo svg:hover {
+  cursor: pointer;
+}
+
+.side-bar {
+  background-color: rgba(50, 50, 50, 0.8);
+  position: fixed;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  width: 250px;
+  animation: showSideBar 0.4s;
+}
+
+@keyframes showSideBar {
+  from {
+    opacity: 0;
+    width: 0px;
+  }
+  to {
+    opacity: 0.8;
+    width: 200px;
+  }
+};
 
 .text-message {
-  text-align: center;
-}
-
-
-.main-logo {
-  height: 100px;
-  width: 590px;
-  background-size: cover;
-  mask-repeat: repeat-x;
 
 }
 
@@ -41,8 +93,6 @@ body {
   font-family: pretendo;
   font-size: 30px;
   font-weight: 800;
-  display: flex;
-  flex-direction: column;
   width: 30%;
 }
 
@@ -50,7 +100,6 @@ body {
   height: 25px;
   justify-content: center;
   align-items: center;
-  width: 30%;
 }
 
 .email-input {
@@ -60,6 +109,23 @@ body {
   align-items: center;
 }
 
+.search-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  width: 70%;
+}
+
+.search-input-and-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 30%;
+}
+
 input[type="text"] {
   background-color: rgba(0, 0, 0, 1);
   border: solid rgba(255, 255, 255, 0.6) 1px;
@@ -67,8 +133,39 @@ input[type="text"] {
   font-family: pretendo;
   font-size: 25px;
   border-radius: 10px;
-  width: 605px;
+  margin-left: 25%;
   text-align: center;
+  height: 26px;
+  width: 420px;
+  margin-bottom: 5px;
+  margin-top: 1px;
+}
+
+input[type="text"]:focus {
+  border: solid black 1px;
+}
+
+.search-button {
+  background-color: red;
+  color: white;
+  border: solid rgba(255, 255, 255, 1) 2px;
+  font-weight: 950;
+  padding: 0px 10px;
+  border-radius: 10px;
+  margin-left: 44%;
+  height: 32px;
+  position: inherit;
+}
+
+.search-button:hover {
+  background-color: red;
+  color: white;
+  border: solid rgba(255, 255, 255, 0.4) 2px;
+  font-weight: 950;
+  padding: 0px 10px;
+  border-radius: 10px;
+  margin-left: 44%;
+  cursor: pointer;
 }
 
 input[type="text"].email-input {
@@ -109,14 +206,6 @@ input[type="text"]:hover {
   color: red;
 }
 
-.search-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 8%;
-  width: 100%;
-}
-
 .login-form {
   display: flex;
   flex-direction: column;
@@ -131,18 +220,8 @@ input[type="text"]:hover {
   font-family: pretendo;
   font-size: 60px;
   color: black;
-}
-
-
-.search-button {
-  background-color: red;
-  color: white;
-  border: solid rgba(255, 255, 255, 1) 2px;
-  font-weight: 950;
-  padding: 0px 10px;
-  border-radius: 10px;
   margin-left: 30%;
-  height: 32px;
+  background-color: #1BB72A;
 }
 
 .login-button {
@@ -154,17 +233,6 @@ input[type="text"]:hover {
   border-radius: 10px;
   height: 32px;
   margin: 5px;
-}
-
-.search-button:hover {
-  background-color: red;
-  color: white;
-  border: solid rgba(255, 255, 255, 0.4) 2px;
-  font-weight: 950;
-  padding: 0px 10px;
-  border-radius: 10px;
-  margin-left: 30%;
-  cursor: pointer;
 }
 
 .login-button:hover {
@@ -188,7 +256,6 @@ input[type="text"]:hover {
 }
 
 .search-type {
-  background-color: black;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-size: 15px;
   color: rgba(255, 255, 255, 0.9);
@@ -198,8 +265,10 @@ input[type="text"]:hover {
   justify-content: center;
   align-self: center;
   border: solid rgba(255, 255, 255, 0.6) 1px;
-  border-radius: 10px;
+  border-radius: 7px;
   padding: 3px;
+  width: 200px;
+  margin-left: 28.5%;
 }
 
 input[type='radio']:after {
@@ -232,8 +301,10 @@ input[type='radio']:checked:after {
 
 .search-type-container {
   padding: 2px;
+  width: 100px;
   height: 21px;
-  background-color: #3A3A3A;
+  border-radius: 7px;
+  background-color: black;
 }
 
 .search-type-name {
@@ -241,15 +312,18 @@ input[type='radio']:checked:after {
 }
 
 .result-container {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   align-content: center;
+  width: 80%;
+  margin-left: 10%;
 }
 
 .result-list {
-  min-height: 500px;
-  width: 950px;
+  width: 80%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -261,9 +335,16 @@ input[type='radio']:checked:after {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 888px;
-  margin: 6px;
-  margin-top: 40px;
+  width: 100%;
+  margin: 0px;
+  margin-top: 10%;
+  margin-left: 1%;
+}
+
+.list-title {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
+  color: white;
 }
 
 h3 {
@@ -279,9 +360,10 @@ h4 {
   margin-bottom: 12px;
 }
 
-p {
+.text-message {
   font-family: pretendo;
-  font-size: 27px;
+  font-size: 37px;
+  margin-left: 33%;
 }
 
 img {
@@ -301,6 +383,7 @@ img {
   height: 300px;
   width: 170px;
   margin: 5px;
+  padding: 5px 0px 10px;
 }
 
 .card:hover {
@@ -334,7 +417,7 @@ img {
   letter-spacing: 3px;
   color: white;
   border-radius: 10px;
-  padding: 5px 11px 0px;
+  padding: 5px 11px 2px;
   font-weight: bold;
   margin: 2px;
   border: solid black 2px;
@@ -348,13 +431,22 @@ img {
 }
 
 .pokemon-height {
+  font-family: pretendo;
+  font-size: 27px;
   margin: 0px;
   margin-bottom: 0px;
 }
 
 .pokemon-weight {
-  margin: 0px;
-  margin-bottom: 0px;
+  font-family: pretendo;
+  font-size: 27px;
+  margin: 15px;
+  margin-top: 2px;
+}
+
+.pokemon-id {
+  font-family: pretendo;
+  font-size: 27px;
 }
 
 @keyframes rotation {
@@ -438,12 +530,4 @@ img {
 
 #bug {
   background-color: #B9DA18;
-}
-
-
-
-
-.pokemon-weight {
-  margin: 15px;
-  margin-top: 2px;
 }
