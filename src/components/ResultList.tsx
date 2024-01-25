@@ -12,7 +12,7 @@ const ResultList: FC<IResultListProps> = (props): JSX.Element => {
     <div className='result-container'>
       <div className='result-list'>
         {pokemons !== null && pokemons !== undefined && context?.loading === false &&
-         pokemons.map((pokemon) => (
+         pokemons.every((pokemon => pokemon.forms !== undefined)) && pokemons.map((pokemon) => (
           <PokemonCard pokemon={ pokemon } key={ pokemon.id } />
         ))
       }

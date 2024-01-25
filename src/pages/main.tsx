@@ -4,12 +4,12 @@ import SearchBar from '../components/SearchBar';
 import { SearchResultsContext } from '../context/searchResultsContext';
 import ResultList from '../components/ResultList';
 import Header from '../components/Header';
+import IPokemon from '../Interfaces/IPokemon';
 
 const MainPage: React.FC = () => {
   const context = useContext(SearchResultsContext);
 
   const [results, setResults] = useState(context?.searchResults);
-  const [sideBar, setSideBar] = useState(false);
 
   useEffect(function () {
     context?.setLoading(true);
@@ -18,11 +18,11 @@ const MainPage: React.FC = () => {
   }, [context?.searchResults])
 
   return (
-    <div className="homePage">
+    <div>
       <Header/>
       {(results === null || results === undefined) && context?.loading === false && <h3 className='text-message'> Olá treinador, utilize a barra de pesquisa! </h3> }
       <SearchBar />
-      { context?.loading !== true && results !== null && results !== undefined && <ResultList pokemons={ results } />}
+      { context?.loading !== true && results !== null && results !== undefined && <ResultList pokemons={ results as IPokemon[]} />}
 
     {context?.loading === true && <LoadingScreen />}
     </div>

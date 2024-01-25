@@ -22,8 +22,6 @@ interface ISprites {
   front_female: string | undefined;
   front_shiny: string | undefined;
   front_shiny_female: string | undefined;
-  other: any;
-  versions: any;
 }
 
 interface ITypes {

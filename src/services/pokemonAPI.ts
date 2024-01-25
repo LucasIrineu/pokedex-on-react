@@ -1,3 +1,4 @@
+import IPokeJSON from '../Interfaces/IPokeJSON';
 import IPokemon from '../Interfaces/IPokemon';
 import ISimplePokemon from '../Interfaces/ISimplePokemon';
 import { capitalizeString } from '../utils';
@@ -6,18 +7,31 @@ export const getPokemonByIdOrName = async (idOrName: string) => {
   try {
   const lowerCaseStr = idOrName.toLowerCase();
   const request = await fetch(`https://pokeapi.co/api/v2/pokemon/${lowerCaseStr}/`);
-  const requestJson = await request.json();
+  const requestJSON = await request.json();
 
-  return sortPokemonData(requestJson);
+  return sortPokemonData(requestJSON);
   } catch (error) {
     return null
   }
-
 }
 
-export const getFirstGen = async (perPage: number, index: number) => {
+export const getFirstGen = async (perPage: number | undefined, pageIndex: number) => {
+  if (perPage === undefined) return null
   
-  const endpoint = `https://pokeapi.co/api/v2/pokemon?limit=${perPage}&offset=${index * 15}`
+  const offSet = perPage * pageIndex;
+  let endpoint = '';
+
+  if ((perPage + offSet) <= 151) {
+    endpoint = `https://pokeapi.co/api/v2/pokemon?limit=${perPage}&offset=${offSet}`
+  } else {
+    const lastPage = 151 - offSet
+    endpoint = `https://pokeapi.co/api/v2/pokemon?limit=${lastPage}&offset=${offSet}`
+  }
+
+  const request = await fetch(endpoint);
+  const requestJSON = await request.json();
+  
+  return await getMultiplePokemons(requestJSON)
 }
 
 export const getPokemonByRegion = async (region: string) => {
@@ -38,17 +52,9 @@ export const getPokemonByRegion = async (region: string) => {
   }
 
   const request = await fetch(endpoint);
-  const requestJson = await request.json();
-  const { results } = requestJson;
-
-  const promises = results.map(async (element: ISimplePokemon) => {
-    const pokeToAdd = await getPokemonByIdOrName(element.name);
-    return pokeToAdd;
-  });
-
-  const result = Promise.all(promises);
-
-  return result;
+  const requestJSON = await request.json();
+  
+  return await getMultiplePokemons(requestJSON)
 }
 
 const sortPokemonData = (pokemonJson: IPokemon): IPokemon => {
@@ -65,4 +71,21 @@ const sortPokemonData = (pokemonJson: IPokemon): IPokemon => {
     sprites,
     types
   };
+}
+
+const getMultiplePokemons = async (JSON: IPokeJSON) => {
+  const { results } = JSON;
+  const promises = results.map(async (element: ISimplePokemon) => {
+    const pokeToAdd = await getPokemonByIdOrName(element.name);
+    return pokeToAdd;
+  });
+
+  const result = await Promise.all(promises);
+
+  if (result.every((pokemon => pokemon !== null && pokemon.id !== undefined))) {
+    return result
+  }
+
+  return null
+  
 }

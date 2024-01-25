@@ -3,13 +3,15 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import MainPage from './pages/main';
 import Login from './pages/login'
 import './App.css'
+import RegionPage from './pages/region';
 
 function App() {
   return (
       <BrowserRouter>
         <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/main" element={<MainPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/gen/:id" element={<RegionPage />} />
         </Routes>
       </BrowserRouter>
   );

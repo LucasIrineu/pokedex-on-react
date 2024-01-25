@@ -1,23 +1,19 @@
 import React, { useState, useContext } from 'react'
 import { SearchResultsContext } from '../context/searchResultsContext';
-import { getPokemonByIdOrName, getPokemonByRegion } from '../services/pokemonAPI';
+import { getPokemonByIdOrName } from '../services/pokemonAPI';
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
-  const [searchType, setSearchType] = useState('name')
 
   const context = useContext(SearchResultsContext);
+  const navigate = useNavigate()
 
   const handleSearchButton = async () => {
-    if (searchType === 'name') {
       context?.setLoading(true)
       const results = await getPokemonByIdOrName(searchInput);
       results !== null ? context?.setSearchResults([results]) : context?.setSearchResults(null);
-    } else if (searchType === 'region') {
-      context?.setLoading(true)
-      const results = await getPokemonByRegion(searchInput);
-      results !== null ? context?.setSearchResults(results) : context?.setSearchResults(null);
-    }
+      navigate('/')
   }
 
   const handleEnterButton = (e: React.KeyboardEvent) => {
@@ -53,30 +49,6 @@ function SearchBar() {
         </button>
       </div>
     </form>
-
-    <div className="search-type">
-      <label htmlFor="type-name" className="search-type-container">
-        <input
-          id="type-name"
-          type="radio"
-          value="name"
-          onChange={({ target }) => setSearchType(target.value)}
-          checked={ searchType === 'name'}
-        />
-        <span className="search-type-name">Nome / ID</span>
-      </label>
-
-      <label htmlFor="type-region" className="search-type-container">
-        <input
-          id="type-region"
-          type="radio"
-          value="region"
-          onChange={({ target }) => setSearchType(target.value)}
-          checked={ searchType === 'region'}
-        />
-        <span className="search-type-name">Região</span>
-      </label>
-    </div>
     </div>
   )
 }
