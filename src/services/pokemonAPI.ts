@@ -1,7 +1,7 @@
 import IPokeJSON from '../Interfaces/IPokeJSON';
 import IPokemon from '../Interfaces/IPokemon';
 import ISimplePokemon from '../Interfaces/ISimplePokemon';
-import { capitalizeString } from '../utils';
+import { capitalizeString, pokedexLimiter } from '../utils';
 
 export const getPokemonByIdOrName = async (idOrName: string) => {
   try {
@@ -15,17 +15,26 @@ export const getPokemonByIdOrName = async (idOrName: string) => {
   }
 }
 
-export const getFirstGen = async (perPage: number | undefined, pageIndex: number) => {
+export const getPokeByGen = async (perPage: number | undefined, pageIndex: number, generation: number) => {
   if (perPage === undefined) return null
   
-  const offSet = perPage * pageIndex;
+
+  const limiter = pokedexLimiter(generation)
+  
+  let offSet = (perPage * pageIndex) + pokedexLimiter(generation - 1) - perPage
+  if (offSet < pokedexLimiter(generation - 1)) {
+    offSet = pokedexLimiter(generation - 1)
+  } 
+  console.log('perPage:', perPage, 'pageIndex:', pageIndex, 'perPage * pageIndex:', (perPage * pageIndex), 'pokeLimiter (-1):', pokedexLimiter(generation - 1), 'offset:', offSet)
   let endpoint = '';
 
-  if ((perPage + offSet) <= 151) {
+  if (((perPage + offSet) <= limiter) && ((perPage + offSet) >= pokedexLimiter(generation - 1) + 1)) {
     endpoint = `https://pokeapi.co/api/v2/pokemon?limit=${perPage}&offset=${offSet}`
+    console.log('aqui:', endpoint)
   } else {
-    const lastPage = 151 - offSet
+    const lastPage = limiter - offSet
     endpoint = `https://pokeapi.co/api/v2/pokemon?limit=${lastPage}&offset=${offSet}`
+    console.log('aqui:2', endpoint)
   }
 
   const request = await fetch(endpoint);

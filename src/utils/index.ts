@@ -6,6 +6,9 @@ export const pokedexLimiter = (generation: number) => {
   let limiter = 0
 
   switch (generation) {
+    case 0:
+      limiter = 0      
+      break;
     case 1:
       limiter = 151      
       break;
@@ -26,6 +29,12 @@ export const pokedexLimiter = (generation: number) => {
       break;
     case 7:
       limiter = 809
+      break;
+    case 8:
+      limiter = 905
+      break;
+    case 9:
+    limiter = 1025
       break;
     default:
       break;

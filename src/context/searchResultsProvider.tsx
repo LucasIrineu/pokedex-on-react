@@ -10,7 +10,7 @@ interface IProps {
 export const SearchResultsProvider = ({ children }: IProps) => {
   const [searchResults, setSearchResults] = useState<IPokemon[] | null | (IPokemon | null)[]>(null);
   const [loading, setLoading] = useState(false);
-  const [perPage, setPerPage] = useState<number | undefined>(15);
+  const [perPage, setPerPage] = useState<number | undefined>(8);
   const [activePage, setActivePage] = useState<number>(1);
 
   const search = (input: IPokemon[] | null | (IPokemon | null)[]) => {

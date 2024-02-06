@@ -1,18 +1,18 @@
 import React, { FC, useContext } from "react";
 import IPaginationProps from "../Interfaces/IPaginationProps";
 import { SearchResultsContext } from "../context/searchResultsContext";
-import { getFirstGen } from "../services/pokemonAPI";
+import { getPokeByGen } from "../services/pokemonAPI";
 
 const Pagination: FC<IPaginationProps> = (props)=> {
-    const { pagination, setActivePage, activePage } = props;
+    const { pagination, setActivePage, activePage, generation } = props;
     const context = useContext(SearchResultsContext)
 
     async function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
         context?.setLoading(true)
         setActivePage(Number(event.currentTarget.value))
         console.log(event.currentTarget.value)
-        const request = await getFirstGen(context?.perPage, (pagination - 1))
-        context?.search(request)
+        const request = await getPokeByGen(context?.perPage, (pagination), generation)
+        context?.setSearchResults(request)
         }
     
     return (
